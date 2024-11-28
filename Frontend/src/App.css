@@ -1,0 +1,67 @@
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 20px;
+  background-color: #f8f9fa;
+}
+
+h1 {
+  color: #333;
+}
+
+.App-form {
+  margin-bottom: 30px;
+}
+
+label {
+  display: block;
+  margin: 10px 0 5px;
+  font-weight: bold;
+}
+
+input {
+  width: 300px;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.App-table {
+  border-collapse: collapse;
+  margin: 0 auto;
+  width: 60%;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.App-table th,
+.App-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+.App-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.App-table td {
+  color: #555;
+}

@@ -1,8 +1,10 @@
 trigger:
 - main 
 
+# pool:
+#   name: 'Default'
 pool:
-  name: 'Default'
+  vmImage: 'ubuntu-latest'
 
 variables:
   NODE_VERSION: '16'

@@ -1,0 +1,100 @@
+trigger:
+- main 
+
+pool:
+  name: 'Default'
+
+variables:
+  NODE_VERSION: '16'
+
+stages:
+  - stage: Build
+    displayName: "Build Stage"
+    jobs:
+      - job: BuildAndTest
+        displayName: "Build and Test Job"
+        steps:
+          # Step 1: Use Node.js environment
+          - task: UseNode@1
+            inputs:
+              versionSpec: $(NODE_VERSION)
+
+          # Step 2: Install dependencies, lint, and build the app
+          - script: |
+              npm install
+              npm run lint
+              npm run build
+            displayName: "Install, Lint, and Build"
+
+          # Step 3: Run unit tests and generate coverage report
+          - script: |
+              npm run test -- --coverage
+            displayName: "Run Unit Tests and Generate Coverage Report"
+
+          # Step 4: Publish test results (if applicable)
+          - task: PublishTestResults@2
+            inputs:
+              testResultsFiles: '**/test-results.xml'
+              testRunTitle: 'Unit Tests'
+
+  - stage: Deliver
+    displayName: "Deliver Stage"
+    dependsOn: Build
+    jobs:
+      - job: DeliverJob
+        displayName: "Deliver Artifact"
+        steps:
+          # Step 1: Publish build artifact
+          - task: PublishPipelineArtifact@1
+            inputs:
+              targetPath: './dist'
+              artifact: 'webapp'
+              publishLocation: 'pipeline'
+
+  - stage: DeployToDev
+    displayName: "Deploy to Dev Environment"
+    dependsOn: Deliver
+    jobs:
+      - job: DeployToDevJob
+        displayName: "Deploy to Dev"
+        steps:
+          # Mock deployment for Dev
+          - script: |
+              echo "Mock deployment to Dev Environment"
+            displayName: "Mock Deploy to Dev"
+
+  - stage: DeployToQAT
+    displayName: "Deploy to QAT Environment"
+    dependsOn: DeployToDev
+    jobs:
+      - job: DeployToQATJob
+        displayName: "Deploy to QAT"
+        steps:
+          # Mock deployment for QAT
+          - script: |
+              echo "Mock deployment to QAT Environment"
+            displayName: "Mock Deploy to QAT"
+
+  - stage: DeployToStaging
+    displayName: "Deploy to Staging Environment"
+    dependsOn: DeployToQAT
+    jobs:
+      - job: DeployToStagingJob
+        displayName: "Deploy to Staging"
+        steps:
+          # Mock deployment for Staging
+          - script: |
+              echo "Mock deployment to Staging Environment"
+            displayName: "Mock Deploy to Staging"
+
+  - stage: DeployToProduction
+    displayName: "Deploy to Production Environment"
+    dependsOn: DeployToStaging
+    jobs:
+      - job: DeployToProdJob
+        displayName: "Deploy to Production"
+        steps:
+          # Mock deployment for Production
+          - script: |
+              echo "Mock deployment to Production Environment"
+            displayName: "Mock Deploy to Production"

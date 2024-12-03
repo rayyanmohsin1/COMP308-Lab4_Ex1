@@ -9,5 +9,8 @@
     "express-session": "^1.18.1",
     "method-override": "^3.0.0",
     "morgan": "^1.10.0"
+  },
+  "scripts": {
+    "test": "jest"
   }
 }

@@ -53,14 +53,14 @@ function App() {
                     onChange={handleChange}
                     required
                 />
-                <label>Sepal Width:</label>
+                {/*<label>Sepal Width:</label>
                 <input
                     type="number"
                     name="sepal_width"
                     value={inputData.sepal_width}
                     onChange={handleChange}
                     required
-                />
+                />*/}
                 <label>Petal Length:</label>
                 <input
                     type="number"

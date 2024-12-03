@@ -21,6 +21,19 @@ stages:
               checkLatest: true
             displayName: "Install Node.js $(NODE_VERSION)"
 
+          # Step 2: Install global dependencies for TensorFlow (if needed)
+          - script: |
+              npm install --global windows-build-tools
+              npm install --global node-gyp
+              npm install --global python
+            displayName: "Install Global Dependencies for TensorFlow"
+
+          # Step 3: Set environment variables for TensorFlow
+          - script: |
+              setx TF_CPP_MIN_LOG_LEVEL 2
+              setx PYTHON python3
+            displayName: "Set TensorFlow Environment Variables"
+
           # Step 2: Install dependencies, lint, and build the frontend
           - script: |
               cd frontend

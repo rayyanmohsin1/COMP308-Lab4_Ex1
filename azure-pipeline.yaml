@@ -36,6 +36,12 @@ stages:
               npm run build
             displayName: "Install and Build Backend"
 
+          # Step 4: Install Jest in the backend
+          - script: |
+              cd backend
+              npm install --save-dev jest
+            displayName: "Install Jest in Backend"
+
           # Step 4: Run backend unit tests and generate coverage report
           - script: |
               cd backend

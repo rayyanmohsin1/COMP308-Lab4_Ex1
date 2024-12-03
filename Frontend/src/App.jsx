@@ -22,7 +22,7 @@ function App() {
     };
 
     // Handle form submission
-    /*const handleSubmit = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setError(''); // Clear any previous errors
         try {
@@ -39,28 +39,28 @@ function App() {
             console.error('Error making prediction:', err);
             setError('Prediction failed. Please try again.');
         }
-    };*/
+    };
 
     return (
         <div>
             <h1>AI Prediction App</h1>
             <form className="App-form" onSubmit={handleSubmit}>
-                {/*<label>Sepal Length:</label>
+                <label>Sepal Length:</label>
                 <input
                     type="number"
                     name="sepal_length"
                     value={inputData.sepal_length}
                     onChange={handleChange}
                     required
-                />*/}
-                <label>Sepal Width:</label>
+                />
+                {/*<label>Sepal Width:</label>
                 <input
                     type="number"
                     name="sepal_width"
                     value={inputData.sepal_width}
                     onChange={handleChange}
                     required
-                />
+                />*/}
                 <label>Petal Length:</label>
                 <input
                     type="number"

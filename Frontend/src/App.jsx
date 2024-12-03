@@ -45,14 +45,14 @@ function App() {
         <div>
             <h1>AI Prediction App</h1>
             <form className="App-form" onSubmit={handleSubmit}>
-                <label>Sepal Length:</label>
+                {/*<label>Sepal Length:</label>
                 <input
                     type="number"
                     name="sepal_length"
                     value={inputData.sepal_length}
                     onChange={handleChange}
                     required
-                />
+                />*/}
                 <label>Sepal Width:</label>
                 <input
                     type="number"

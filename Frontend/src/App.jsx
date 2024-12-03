@@ -22,7 +22,7 @@ function App() {
     };
 
     // Handle form submission
-    const handleSubmit = async (e) => {
+    /*const handleSubmit = async (e) => {
         e.preventDefault();
         setError(''); // Clear any previous errors
         try {
@@ -39,7 +39,7 @@ function App() {
             console.error('Error making prediction:', err);
             setError('Prediction failed. Please try again.');
         }
-    };
+    };*/
 
     return (
         <div>

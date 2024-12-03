@@ -61,19 +61,36 @@ stages:
       - job: DeliverJob
         displayName: "Deliver Artifact"
         steps:
-          # Step 1: Publish frontend artifact
+          # Step 1: Verify and create frontend/dist directory if it doesn't exist
+          - script: |
+              if [ ! -d "frontend/dist" ]; then
+                echo "frontend/dist does not exist. Creating directory..."
+                mkdir -p frontend/dist
+              fi
+            displayName: "Check and Create frontend/dist Directory if Not Exist"
+
+          # Step 2: Verify and create backend/build directory if it doesn't exist
+          - script: |
+              if [ ! -d "backend/build" ]; then
+                echo "backend/build does not exist. Creating directory..."
+                mkdir -p backend/build
+              fi
+            displayName: "Check and Create backend/build Directory if Not Exist"
+
+          # Step 3: Publish frontend artifact
           - task: PublishPipelineArtifact@1
             inputs:
               targetPath: './frontend/dist'
               artifact: 'frontend'
               publishLocation: 'pipeline'
 
-          # Step 2: Publish backend artifact
+          # Step 4: Publish backend artifact
           - task: PublishPipelineArtifact@1
             inputs:
               targetPath: './backend/build'
               artifact: 'backend'
               publishLocation: 'pipeline'
+
 
   - stage: DeployToDev
     displayName: "Deploy to Dev Environment"

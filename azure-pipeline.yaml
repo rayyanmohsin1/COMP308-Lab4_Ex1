@@ -1,5 +1,5 @@
 trigger:
-- main 
+- main
 
 pool:
   name: 'Default'
@@ -14,13 +14,12 @@ stages:
       - job: BuildAndTest
         displayName: "Build and Test Job"
         steps:
-          # Step 1: Install Node.js manually
-          - script: |
-              curl -fsSL https://deb.nodesource.com/setup_$(NODE_VERSION).x | bash -
-              apt-get install -y nodejs
-              node -v
-              npm -v
-            displayName: "Install Node.js and NPM"
+          # Step 1: Use Node.js Tool Installer
+          - task: UseNode@1
+            inputs:
+              version: $(NODE_VERSION)
+              checkLatest: true
+            displayName: "Install Node.js $(NODE_VERSION)"
 
           # Step 2: Install dependencies, lint, and build the app
           - script: |

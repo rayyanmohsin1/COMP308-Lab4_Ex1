@@ -1,11 +1,11 @@
 trigger:
-- main 
+- main
 
 pool:
   name: 'Default'
 
 variables:
-  NODE_VERSION: '16'
+  NODE_VERSION: '18'
 
 stages:
   - stage: Build
@@ -14,27 +14,41 @@ stages:
       - job: BuildAndTest
         displayName: "Build and Test Job"
         steps:
-          # Step 1: Install Node.js manually
-          - script: |
-              curl -fsSL https://deb.nodesource.com/setup_$(NODE_VERSION).x | bash -
-              apt-get install -y nodejs
-              node -v
-              npm -v
-            displayName: "Install Node.js and NPM"
+          # Step 1: Use Node.js Tool Installer
+          - task: UseNode@1
+            inputs:
+              version: $(NODE_VERSION)
+              checkLatest: true
+            displayName: "Install Node.js $(NODE_VERSION)"
 
-          # Step 2: Install dependencies, lint, and build the app
+          # Step 2: Install dependencies, lint, and build the frontend
           - script: |
+              cd frontend
               npm install
               npm run lint
               npm run build
-            displayName: "Install, Lint, and Build"
+            displayName: "Install, Lint, and Build Frontend"
 
-          # Step 3: Run unit tests and generate coverage report
+          # Step 3: Install dependencies and build the backend
           - script: |
-              npm run test -- --coverage
-            displayName: "Run Unit Tests and Generate Coverage Report"
+              cd backend
+              npm install
+              npm run build
+            displayName: "Install and Build Backend"
 
-          # Step 4: Publish test results (if applicable)
+          # Step 4: Install Jest in the backend
+          - script: |
+              cd backend
+              npm install --save-dev jest
+            displayName: "Install Jest in Backend"
+
+          # Step 4: Run backend unit tests and generate coverage report
+          - script: |
+              cd backend
+              npm run test -- --coverage
+            displayName: "Run Backend Unit Tests and Generate Coverage Report"
+
+          # Step 5: Publish test results (if applicable)
           - task: PublishTestResults@2
             inputs:
               testResultsFiles: '**/test-results.xml'
@@ -47,11 +61,18 @@ stages:
       - job: DeliverJob
         displayName: "Deliver Artifact"
         steps:
-          # Step 1: Publish build artifact
+          # Step 1: Publish frontend artifact
           - task: PublishPipelineArtifact@1
             inputs:
-              targetPath: './dist'
-              artifact: 'webapp'
+              targetPath: './frontend'
+              artifact: 'frontend'
+              publishLocation: 'pipeline'
+
+          # Step 2: Publish backend artifact
+          - task: PublishPipelineArtifact@1
+            inputs:
+              targetPath: './backend'
+              artifact: 'backend'
               publishLocation: 'pipeline'
 
   - stage: DeployToDev
